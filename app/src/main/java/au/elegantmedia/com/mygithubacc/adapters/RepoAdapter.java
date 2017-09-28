@@ -1,6 +1,8 @@
 package au.elegantmedia.com.mygithubacc.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,11 +39,20 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Repo repo = list.get(position);
+        final Repo repo = list.get(position);
 
         holder.mName.setText(repo.name);
         holder.mUrl.setText(repo.url);
         holder.mDes.setText(repo.description);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.getContext().startActivity(
+                        new Intent(Intent.ACTION_VIEW, Uri.parse(repo.url)));
+            }
+        });
+
     }
 
     @Override

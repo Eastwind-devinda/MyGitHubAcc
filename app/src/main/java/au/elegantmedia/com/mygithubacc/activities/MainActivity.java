@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements UserSync.UserGetC
     TextView mLocation;
     @BindView(R.id.tv_repo)
     TextView mRepo;
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
 
     UserSync userSync;
     String username;
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements UserSync.UserGetC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
         username = intent.getStringExtra("UserName");
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements UserSync.UserGetC
     @Override
     public void onGetUserSuccess(User user) {
         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.INVISIBLE);
 
         mLogin.setText(user.login);
         Picasso.with(getApplication()).load(user.avatar_url).into(mImageView);

@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class ReposActivity extends AppCompatActivity implements RepoSync.RepoGet
 
     @BindView(R.id.repo_listview)
     RecyclerView mRecyclerView;
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
 
     RecyclerView.Adapter adapter;
     List<Repo> repoList;
@@ -35,6 +38,8 @@ public class ReposActivity extends AppCompatActivity implements RepoSync.RepoGet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repos);
         ButterKnife.bind(this);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
         String username = intent.getStringExtra("userName");
@@ -60,6 +65,8 @@ public class ReposActivity extends AppCompatActivity implements RepoSync.RepoGet
             repo.description = repoResponse.get(i).getDescription();
 
             repoList.add(repo);
+
+            progressBar.setVisibility(View.INVISIBLE);
 
             adapter = new RepoAdapter(repoList, getApplicationContext());
             mRecyclerView.setAdapter(adapter);
