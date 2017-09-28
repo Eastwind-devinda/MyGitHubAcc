@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements UserSync.UserGetC
     TextView mRepo;
 
     UserSync userSync;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements UserSync.UserGetC
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra("UserName");
+        username = intent.getStringExtra("UserName");
 
 
         userSync = new UserSync(this);
@@ -63,6 +64,13 @@ public class MainActivity extends AppCompatActivity implements UserSync.UserGetC
 
         if (getItem == R.id.user_select) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
+            return true;
+        }
+        if (getItem == R.id.repo_select) {
+            Intent intent = new Intent(MainActivity.this, ReposActivity.class);
+            intent.putExtra("userName",username);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

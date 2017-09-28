@@ -12,6 +12,7 @@ public class UserRequest {
     public String company;
     public String location;
     public String public_repos;
+
     public UserRequest() {
     }
 

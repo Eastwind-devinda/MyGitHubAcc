@@ -6,10 +6,10 @@ package au.elegantmedia.com.mygithubacc.services.Request;
 
 public class LoginRequest {
 
-    public  String Username;
+    public String Username;
 
     public LoginRequest(String loginname) {
-        this.Username=loginname;
+        this.Username = loginname;
     }
 
     public String getUsername() {
