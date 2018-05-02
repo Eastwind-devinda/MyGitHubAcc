@@ -15,7 +15,6 @@ import java.util.List;
 import au.elegantmedia.com.mygithubacc.R;
 import au.elegantmedia.com.mygithubacc.adapters.RepoAdapter;
 import au.elegantmedia.com.mygithubacc.models.Repo;
-import au.elegantmedia.com.mygithubacc.services.Request.LoginRequest;
 import au.elegantmedia.com.mygithubacc.services.sync.RepoSync;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +29,6 @@ public class ReposActivity extends AppCompatActivity implements RepoSync.RepoGet
     RecyclerView.Adapter adapter;
     List<Repo> repoList;
     RepoSync repoSync;
-    LoginRequest loginRequest;
     Repo repo;
 
     @Override
@@ -47,11 +45,9 @@ public class ReposActivity extends AppCompatActivity implements RepoSync.RepoGet
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        loginRequest = new LoginRequest(username);
-
         repoList = new ArrayList<>();
         repoSync = new RepoSync(this);
-        repoSync.getRepoDetails(this, loginRequest);
+        repoSync.getRepoDetails(this, username);
     }
 
     @Override

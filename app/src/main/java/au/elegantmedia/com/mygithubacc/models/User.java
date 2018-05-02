@@ -1,10 +1,12 @@
 package au.elegantmedia.com.mygithubacc.models;
 
+import java.io.Serializable;
+
 /**
- * Created by Nisala on 9/22/17.
+ * Created by Devinda on 9/22/17.
  */
 
-public class User {
+public class User implements Serializable {
 
     public String login;
     public String avatar_url;
@@ -12,9 +14,6 @@ public class User {
     public String company;
     public String location;
     public String public_repos;
-
-    public User() {
-    }
 
     public String getLogin() {
         return login;

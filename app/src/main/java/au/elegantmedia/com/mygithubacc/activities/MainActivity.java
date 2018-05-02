@@ -9,18 +9,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import au.elegantmedia.com.mygithubacc.R;
+import au.elegantmedia.com.mygithubacc.helpers.Constant;
 import au.elegantmedia.com.mygithubacc.models.User;
-import au.elegantmedia.com.mygithubacc.services.Request.LoginRequest;
 import au.elegantmedia.com.mygithubacc.services.sync.UserSync;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements UserSync.UserGetCallback {
+public class MainActivity extends AppCompatActivity{
 
     @BindView(R.id.avatar)
     ImageView mImageView;
@@ -37,24 +36,26 @@ public class MainActivity extends AppCompatActivity implements UserSync.UserGetC
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
-    UserSync userSync;
-    String username;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
-        username = intent.getStringExtra("UserName");
+        user = (User) intent.getSerializableExtra(Constant.USER_EXTRA);
 
-
-        userSync = new UserSync(this);
-        LoginRequest loginRequest = new LoginRequest(username);
-        userSync.getUserDetails(this, loginRequest);
+        if (user != null) {
+            mLogin.setText(user.login);
+            Picasso.with(getApplication()).load(user.avatar_url).into(mImageView);
+            mName.setText(user.name);
+            mCompany.setText(user.company);
+            mLocation.setText(user.location);
+            mRepo.setText(user.public_repos);
+        }
 
     }
 
@@ -75,29 +76,11 @@ public class MainActivity extends AppCompatActivity implements UserSync.UserGetC
         }
         if (getItem == R.id.repo_select) {
             Intent intent = new Intent(MainActivity.this, ReposActivity.class);
-            intent.putExtra("userName",username);
+            intent.putExtra("userName", user.login);
             startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onGetUserSuccess(User user) {
-        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-        progressBar.setVisibility(View.INVISIBLE);
-
-        mLogin.setText(user.login);
-        Picasso.with(getApplication()).load(user.avatar_url).into(mImageView);
-        mName.setText(user.name);
-        mCompany.setText(user.company);
-        mLocation.setText(user.location);
-        mRepo.setText(user.public_repos);
-    }
-
-    @Override
-    public void onGetUserFails(String massege) {
-        Toast.makeText(this, massege, Toast.LENGTH_SHORT).show();
     }
 }
 

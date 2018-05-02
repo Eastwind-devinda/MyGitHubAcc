@@ -5,7 +5,6 @@ import android.content.Context;
 import java.util.List;
 
 import au.elegantmedia.com.mygithubacc.models.Repo;
-import au.elegantmedia.com.mygithubacc.services.Request.LoginRequest;
 import au.elegantmedia.com.mygithubacc.services.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,11 +22,11 @@ public class RepoSync {
         this.context = context;
     }
 
-    public void getRepoDetails(final RepoGetCallback callback, LoginRequest loginRequest) {
+    public void getRepoDetails(final RepoGetCallback callback, String loginName) {
 
         ServiceGenerator
                 .CreateService()
-                .repoData(loginRequest.Username)
+                .repoData(loginName)
                 .enqueue(new Callback<List<Repo>>() {
                     @Override
                     public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
