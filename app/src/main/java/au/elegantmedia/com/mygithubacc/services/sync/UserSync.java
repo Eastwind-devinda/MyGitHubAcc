@@ -35,7 +35,7 @@ public class UserSync {
                     if (response.body() != null)
                         callback.onGetUserSuccess(response.body());
                 } else {
-                    callback.onGetUserFails(response.message());
+                    callback.onGetUserFails(response.body().message);
                 }
             }
 

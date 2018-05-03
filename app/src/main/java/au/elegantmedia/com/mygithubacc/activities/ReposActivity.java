@@ -72,5 +72,6 @@ public class ReposActivity extends AppCompatActivity implements RepoSync.RepoGet
     @Override
     public void onGetRepoFails(String massege) {
         Toast.makeText(this, massege, Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

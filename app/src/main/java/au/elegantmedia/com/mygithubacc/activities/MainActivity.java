@@ -15,11 +15,10 @@ import com.squareup.picasso.Picasso;
 import au.elegantmedia.com.mygithubacc.R;
 import au.elegantmedia.com.mygithubacc.helpers.Constant;
 import au.elegantmedia.com.mygithubacc.models.User;
-import au.elegantmedia.com.mygithubacc.services.sync.UserSync;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.avatar)
     ImageView mImageView;
@@ -49,12 +48,12 @@ public class MainActivity extends AppCompatActivity{
         user = (User) intent.getSerializableExtra(Constant.USER_EXTRA);
 
         if (user != null) {
-            mLogin.setText(user.login);
-            Picasso.with(getApplication()).load(user.avatar_url).into(mImageView);
-            mName.setText(user.name);
-            mCompany.setText(user.company);
-            mLocation.setText(user.location);
-            mRepo.setText(user.public_repos);
+            mLogin.setText(user.getLogin());
+            Picasso.with(getApplication()).load(user.getAvatarUrl()).into(mImageView);
+            mName.setText(user.getName());
+            mCompany.setText(user.getCompany());
+            mLocation.setText(user.getLocation());
+            mRepo.setText(user.getPublicRepos());
         }
 
     }
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity{
         }
         if (getItem == R.id.repo_select) {
             Intent intent = new Intent(MainActivity.this, ReposActivity.class);
-            intent.putExtra("userName", user.login);
+            intent.putExtra("userName", user.getLogin());
             startActivity(intent);
             return true;
         }

@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity implements UserSync.UserGet
 
     @OnClick(R.id.btn_login)
     public void login() {
-
         String loginname = mLoginName.getText().toString().trim();
         if (!loginname.equals("")) {
             progressBar.show();
@@ -42,6 +41,8 @@ public class LoginActivity extends AppCompatActivity implements UserSync.UserGet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        mLoginName.setText("Eastwind-devinda");
 
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);

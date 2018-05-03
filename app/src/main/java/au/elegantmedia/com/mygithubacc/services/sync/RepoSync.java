@@ -31,8 +31,9 @@ public class RepoSync {
                     @Override
                     public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
 
-                        if (response.body() != null) {
-                            callback.onGetRepoSuccess(response.body());
+                        if (response.isSuccessful()) {
+                            if (response.body() != null)
+                                callback.onGetRepoSuccess(response.body());
                         } else {
                             callback.onGetRepoFails("Fail");
                         }
@@ -40,7 +41,7 @@ public class RepoSync {
 
                     @Override
                     public void onFailure(Call<List<Repo>> call, Throwable t) {
-
+                        callback.onGetRepoFails("Request Error");
                     }
                 });
 
